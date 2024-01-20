@@ -1,9 +1,14 @@
-import { Button } from "@/components/ui/button";
+import React from "react";
+import { UserButton } from "@clerk/nextjs";
+type Props = {};
 
-export default function Home() {
+const Home = (props: Props) => {
   return (
-    <Button size={"lg"} variant={"destructive"}>
-      Click here
-    </Button>
+    <div className="flex flex-col gap-y-4">
+      <h1>Dashboard</h1>
+      <UserButton afterSignOutUrl="/" />
+    </div>
   );
-}
+};
+
+export default Home;
