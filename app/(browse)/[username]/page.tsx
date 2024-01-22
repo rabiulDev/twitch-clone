@@ -1,5 +1,6 @@
-import { db } from "@/lib/db";
-import React from "react";
+import { notFound } from "next/navigation";
+import { getUserByUsername } from "@/lib/user-service";
+import { isFollowingUser } from "@/lib/follow-service";
 
 interface Props {
   params: {
@@ -9,10 +10,21 @@ interface Props {
 
 const UserPage = async ({ params }: Props) => {
   const username = params.username;
-  const user = await db.user.findUnique({ where: { username } });
-  console.log(user);
-  console.log(username);
-  return <div>UserPage: {username}</div>;
+  const user = await getUserByUsername(username);
+
+  if (!user) {
+    notFound();
+  }
+
+  const isFollowing = await isFollowingUser(user.id);
+
+  return (
+    <div className="flex flex-col gap-y-4">
+      <p>username: {user.username}</p>
+      <p>user ID: {user.id}</p>
+      <p>is following: {`${isFollowing}`}</p>
+    </div>
+  );
 };
 
 export default UserPage;
