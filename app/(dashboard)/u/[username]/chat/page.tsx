@@ -1,8 +1,12 @@
+import { getSelf } from "@/lib/auth-service";
+import { getStreamByUserId } from "@/lib/stream-service";
 import React from "react";
 
 type Props = {};
 
-const ChatPage = (props: Props) => {
+const ChatPage = async (props: Props) => {
+  const self = await getSelf();
+  const stream = await getStreamByUserId(self.id);
   return (
     <div className="p-6">
       <div className="mb-4">
